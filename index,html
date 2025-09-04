@@ -1,191 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Learn HTML, CSS, JS, Python</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>My Coding Course Notebook</title>
   <style>
     :root {
-      --bg-light: #f9f9f9;
-      --text-light: #222;
-      --bg-dark: #1e1e1e;
-      --text-dark: #eee;
-      --accent: #007acc;
+      --bg-light: #f6f8fa;
+      --bg-dark: #23272f;
+      --text-light: #252525;
+      --text-dark: #f9f9f9;
+      --accent: #6c63ff;
+      --accent-dark: #bb86fc;
+      --card-light: #fff;
+      --card-dark: #333646;
+      --border-light: #e5e7eb;
+      --border-dark: #3a3d4d;
     }
-
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
       margin: 0;
       padding: 0;
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      transition: 0.3s;
+      transition: background 0.3s, color 0.3s;
     }
-
+    .dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
     header {
-      background-color: var(--accent);
-      color: white;
-      padding: 20px;
+      background: var(--accent);
+      color: #fff;
       text-align: center;
+      padding: 30px 10px 18px 10px;
+      letter-spacing: 1px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      position: relative;
     }
-
+    .theme-toggle {
+      position: absolute;
+      right: 20px;
+      top: 32px;
+      background: var(--accent-dark);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 7px 18px;
+      cursor: pointer;
+      font-size: 17px;
+      transition: background 0.2s;
+    }
     nav {
       display: flex;
       justify-content: center;
-      gap: 15px;
-      background-color: #ddd;
-      padding: 10px;
+      gap: 12px;
+      margin: 22px 0 18px 0;
+      flex-wrap: wrap;
     }
-
-    nav button {
-      padding: 10px 15px;
-      border: none;
-      background-color: var(--accent);
-      color: white;
+    .tablink {
+      background: var(--card-light);
+      border: 1px solid var(--border-light);
+      color: var(--accent);
+      font-size: 16px;
+      border-radius: 6px 6px 0 0;
+      padding: 10px 24px;
       cursor: pointer;
-      border-radius: 5px;
+      transition: all 0.17s;
+      margin-bottom: -2px;
     }
-
-    section {
-      padding: 20px;
+    .tablink.active, .tablink:hover {
+      background: var(--accent);
+      color: #fff;
+      border-bottom: 2px solid var(--accent);
+      font-weight: bold;
+    }
+    .dark .tablink {
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      color: var(--accent-dark);
+    }
+    .dark .tablink.active, .dark .tablink:hover {
+      background: var(--accent-dark);
+      color: #23272f;
+      border-bottom: 2px solid var(--accent-dark);
+    }
+    .section {
       display: none;
+      max-width: 900px;
+      margin: 0 auto 28px auto;
+      background: var(--card-light);
+      border-radius: 12px;
+      box-shadow: 0 2px 12px #e2e2e2;
+      padding: 32px 22px;
+      border: 1px solid var(--border-light);
+      animation: fadeIn 0.6s;
     }
-
-    .active {
+    .section.active {
       display: block;
     }
-
-    .theme-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      padding: 8px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
+    .dark .section {
+      background: var(--card-dark);
+      border: 1px solid var(--border-dark);
+      box-shadow: 0 2px 14px #25252581;
     }
-
-    pre {
-      background: #eee;
-      padding: 10px;
+    h2, h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+    .dark h2, .dark h3 { color: var(--accent-dark);}
+    .note, .project, .question {
+      border-left: 5px solid var(--accent);
+      background: #eaf2ff;
+      padding: 12px 18px;
+      border-radius: 7px;
+      margin: 18px 0;
+    }
+    .project { border-left: 5px solid #ffb700; background: #fffbe4;}
+    .question { border-left: 5px solid #d7263d; background: #ffe6e6;}
+    .dark .note {background:#292d38;}
+    .dark .project {background:#39320f;}
+    .dark .question {background:#43201a;}
+    .code-block {
+      background: #23272f;
+      color: #f5f5f5;
+      padding: 17px 14px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 14px 0;
+      font-size: 15px;
       overflow-x: auto;
-      border-radius: 5px;
     }
-
-    .dark-mode {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
+    .mini-title {font-weight: bold;margin-bottom: 6px;margin-top:18px;}
+    ul, ol {margin-top: 6px;margin-bottom: 6px;}
+    a {color: var(--accent);}
+    .dark a { color: var(--accent-dark);}
+    footer {
+      text-align: center;
+      padding: 22px 0 13px 0;
+      background: var(--accent);
+      color: #fff;
+      border-top-right-radius: 20px;
+      border-top-left-radius: 20px;
+      font-size: 15px;
+      margin-top: 40px;
     }
-
-    .dark-mode nav {
-      background-color: #333;
+    @media (max-width: 700px) {
+      .section {padding: 12px 4vw;}
+      header {font-size: 15px; padding-bottom: 16px;}
+      nav {gap: 6px;}
     }
-
-    .dark-mode pre {
-      background-color: #2e2e2e;
-      color: #ccc;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(25px);}
+      to { opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>📘 Learn HTML, CSS, JavaScript, Python</h1>
-    <p>Click a topic below to start learning</p>
+    <h1>📚 My Coding Course Notebook</h1>
+    <div style="font-size:17px;">All-in-one: HTML • CSS • JavaScript • Python — Beginner Friendly</div>
+    <button class="theme-toggle" id="themeBtn">🌙 Night Mode</button>
   </header>
-
   <nav>
-    <button onclick="showSection('html')">HTML</button>
-    <button onclick="showSection('css')">CSS</button>
-    <button onclick="showSection('js')">JavaScript</button>
-    <button onclick="showSection('python')">Python</button>
+    <button class="tablink active" data-tab="html">HTML</button>
+    <button class="tablink" data-tab="css">CSS</button>
+    <button class="tablink" data-tab="js">JavaScript</button>
+    <button class="tablink" data-tab="python">Python</button>
+    <button class="tablink" data-tab="resources">Resources</button>
   </nav>
 
-  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-
-  <section id="html" class="active">
-    <h2>🧱 HTML Basics</h2>
-    <p>HTML creates the structure of a webpage.</p>
-    <pre>
+  <!-- HTML Section -->
+  <div class="section active" id="html">
+    <h2>1. HTML — The Skeleton of Every Website</h2>
+    <div class="note">
+      <b>What is HTML?</b><br>
+      <b>HTML</b> stands for <b>H</b>yper<b>T</b>ext <b>M</b>arkup <b>L</b>anguage.<br>
+      It gives structure to your page: headings, text, links, images, lists, forms, etc.
+    </div>
+    <div class="question">
+      <b>Q:</b> What tags make text <b>heading</b>?<br>
+      <b>Q:</b> How do you make a clickable link?
+    </div>
+    <div class="mini-title">Basic Page Structure:</div>
+    <div class="code-block">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
-  &lt;head&gt;&lt;title&gt;My Page&lt;/title&gt;&lt;/head&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/head&gt;
   &lt;body&gt;
-    &lt;h1&gt;Welcome!&lt;/h1&gt;
-    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+    &lt;p&gt;This is my first web page.&lt;/p&gt;
   &lt;/body&gt;
 &lt;/html&gt;
-    </pre>
-    <h3>Mini Project</h3>
-    <p>Create a profile page with your name, photo, and hobbies.</p>
-  </section>
+    </div>
+    <div class="note">
+      <ul>
+        <li><code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code>: Headings (h1 is biggest)</li>
+        <li><code>&lt;p&gt;</code>: Paragraph (normal text)</li>
+        <li><code>&lt;a href="..."&gt;</code>: Link</li>
+        <li><code>&lt;img src="..."&gt;</code>: Image</li>
+        <li><code>&lt;ul&gt;&lt;li&gt;</code>: List</li>
+        <li><code>&lt;input&gt;, &lt;form&gt;</code>: Forms</li>
+      </ul>
+    </div>
+    <div class="project">
+      <b>Mini Project: "About Me" Page</b>
+      <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;About Me&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;My Name is [Your Name]&lt;/h1&gt;
+    &lt;p&gt;I am from Angul, Odisha.&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Coding&lt;/li&gt;
+      &lt;li&gt;Music&lt;/li&gt;
+      &lt;li&gt;Games&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;a href="https://www.w3schools.com/"&gt;Learn More&lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+      </div>
+      <b>Try changing:</b> Your name, hobbies, add a photo, or more links!
+    </div>
+    <div class="question">
+      <b>Practice:</b> Add a heading about your favorite food, and a link to a food recipe.
+    </div>
+    <div class="mini-title">HTML Forms Example:</div>
+    <div class="code-block">
+&lt;form&gt;
+  Name: &lt;input type="text" name="name"&gt;&lt;br&gt;
+  <br>Email: &lt;input type="email" name="email"&gt;&lt;br&gt;
+  <br>&lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+    </div>
+    <div class="note">
+      <code>&lt;input&gt;</code> is used to get user data, like name or email.
+    </div>
+  </div>
 
-  <section id="css">
-    <h2>🎨 CSS Basics</h2>
-    <p>CSS styles your webpage: colors, layout, fonts.</p>
-    <pre>
-body {
-  background-color: lightblue;
-  font-family: Arial;
+  <!-- CSS Section -->
+  <div class="section" id="css">
+    <h2>2. CSS — Make Your Page Beautiful</h2>
+    <div class="note">
+      <b>What is CSS?</b><br>
+      <b>CSS</b> = <b>C</b>ascading <b>S</b>tyle <b>S</b>heets.<br>
+      It adds color, layout, and style to your HTML.
+    </div>
+    <div class="question">
+      <b>Q:</b> How do you change background or text color?<br>
+      <b>Q:</b> What does <code>font-size</code> do?
+    </div>
+    <div class="mini-title">Simple CSS Example:</div>
+    <div class="code-block">
+&lt;style&gt;
+  body { background: #f0f8ff; }
+  h1 { color: #6c63ff; font-size: 38px; }
+  p { color: #444; font-size: 20px; }
+&lt;/style&gt;
+    </div>
+    <div class="note">
+      Add this inside <code>&lt;head&gt;</code> in your HTML file.
+    </div>
+    <div class="mini-title">Change Button Style:</div>
+    <div class="code-block">
+button {
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 22px;
+  cursor: pointer;
 }
-h1 {
-  color: darkblue;
-  text-align: center;
+button:hover {
+  background: #4834d4;
 }
-    </pre>
-    <h3>Mini Project</h3>
-    <p>Style your profile page with colors and spacing.</p>
-  </section>
+    </div>
+    <div class="project">
+      <b>Mini Project: Style your "About Me" page!</b>
+      <ul>
+        <li>Add a background color.</li>
+        <li>Change h1 color and size.</li>
+        <li>Add padding and border to your photo or paragraphs.</li>
+      </ul>
+      <div class="code-block">
+&lt;style&gt;
+  body { background: #fffbe4; }
+  h1 { color: #d7263d; font-size: 36px; }
+  p { color: #222; font-size: 22px; }
+&lt;/style&gt;
+      </div>
+    </div>
+    <div class="question">
+      <b>Practice:</b> Make one paragraph blue. Make your heading bigger. Give your list a border.
+    </div>
+    <div class="mini-title">CSS Box Model (Padding, Border, Margin):</div>
+    <div class="code-block">
+.box {
+  background: #eaf2ff;
+  padding: 12px;
+  border: 2px solid #6c63ff;
+  margin: 20px;
+}
+    </div>
+    <div class="note">
+      <ul>
+        <li><b>padding</b>: space inside the box</li>
+        <li><b>border</b>: the edge</li>
+        <li><b>margin</b>: space outside the box</li>
+      </ul>
+    </div>
+  </div>
 
-  <section id="js">
-    <h2>⚙️ JavaScript Basics</h2>
-    <p>JavaScript makes your page interactive.</p>
-    <pre>
-function greet() {
-  alert("Hello, welcome!");
-}
-    </pre>
-    <h3>Mini Project</h3>
-    <p>Add a button that changes text when clicked.</p>
-    <pre>
-&lt;button onclick="changeText()"&gt;Click Me&lt;/button&gt;
-&lt;p id="demo"&gt;Original Text&lt;/p&gt;
-
+  <!-- JS Section -->
+  <div class="section" id="js">
+    <h2>3. JavaScript — Make Your Page Interactive</h2>
+    <div class="note">
+      <b>What is JavaScript?</b><br>
+      <b>JavaScript (JS)</b> makes your webpage interactive: buttons, popups, animations, etc.
+    </div>
+    <div class="question">
+      <b>Q:</b> How do you show an alert message when you click a button?
+    </div>
+    <div class="mini-title">Basic JS Example:</div>
+    <div class="code-block">
+&lt;button onclick="alert('Hello!')"&gt;Click me&lt;/button&gt;
+    </div>
+    <div class="note">
+      <code>alert(...)</code> shows a popup message.
+    </div>
+    <div class="mini-title">Change Text with Button:</div>
+    <div class="code-block">
+&lt;h2 id="msg"&gt;Welcome!&lt;/h2&gt;
+&lt;button onclick="document.getElementById('msg').innerText = 'You clicked me!';"&gt;Click me&lt;/button&gt;
+    </div>
+    <div class="note">
+      <ul>
+        <li><code>id="msg"</code>: gives the heading a name</li>
+        <li><code>onclick="..."</code>: runs JS code when button is clicked</li>
+        <li><code>innerText</code>: changes the text</li>
+      </ul>
+    </div>
+    <div class="mini-title">JS Variables and Math:</div>
+    <div class="code-block">
 &lt;script&gt;
-function changeText() {
-  document.getElementById("demo").innerHTML = "Text changed!";
+  let a = 5;
+  let b = 3;
+  document.write("Sum: " + (a + b));
+&lt;/script&gt;
+    </div>
+    <div class="question">
+      <b>Practice:</b> Change <code>a</code> and <code>b</code>. Try <code>-</code>, <code>*</code>, <code>/</code> for math.
+    </div>
+    <div class="project">
+      <b>Mini Project: Color Changer</b>
+      <div class="code-block">
+&lt;button onclick="document.body.style.backgroundColor = 'yellow';"&gt;Yellow&lt;/button&gt;
+&lt;button onclick="document.body.style.backgroundColor = 'lightblue';"&gt;Blue&lt;/button&gt;
+      </div>
+      <b>Try:</b> Click buttons to change background color!
+    </div>
+    <div class="mini-title">Show/Hide Text Example:</div>
+    <div class="code-block">
+&lt;p id="showme" style="display:none;"&gt;Hello, I am webTune1!&lt;/p&gt;
+&lt;button onclick="document.getElementById('showme').style.display='block';"&gt;Show Name&lt;/button&gt;
+&lt;button onclick="document.getElementById('showme').style.display='none';"&gt;Hide Name&lt;/button&gt;
+    </div>
+    <div class="note">
+      <code>style.display</code> shows/hides elements.
+    </div>
+    <div class="question">
+      <b>Challenge:</b> Make a button that increases a number each time you click.
+    </div>
+    <div class="mini-title">JS Functions Example:</div>
+    <div class="code-block">
+&lt;script&gt;
+function greet(name) {
+  alert('Hello, ' + name + '!');
 }
 &lt;/script&gt;
-    </pre>
-  </section>
+&lt;button onclick="greet('webTune1')"&gt;Say Hi&lt;/button&gt;
+    </div>
+  </div>
 
-  <section id="python">
-    <h2>🐍 Python Basics</h2>
-    <p>Python is used for automation, data, and more.</p>
-    <pre>
-name = input("What is your name? ")
-print("Hello", name)
-    </pre>
-    <h3>Mini Project</h3>
-    <p>Track daily egg count for your poultry farm.</p>
-    <pre>
-total_eggs = 0
-for day in range(1, 8):
-    eggs = int(input(f"Day {day} eggs: "))
-    total_eggs += eggs
-print("Total eggs this week:", total_eggs)
-    </pre>
-  </section>
+  <!-- Python Section -->
+  <div class="section" id="python">
+    <h2>4. Python — Code For Everything</h2>
+    <div class="note">
+      <b>What is Python?</b><br>
+      <b>Python</b> is a powerful, easy programming language for everything: scripts, games, data, automation, web, AI, and more.
+      <br>You cannot run Python in your browser, but you can install it on your computer (see Resources).
+    </div>
+    <div class="mini-title">Basic Python Example:</div>
+    <div class="code-block">
+print("Hello, Python world!")
+    </div>
+    <div class="note">
+      <code>print(...)</code> shows a message in your terminal.
+    </div>
+    <div class="mini-title">Variables and Math:</div>
+    <div class="code-block">
+a = 10
+b = 5
+print("Sum:", a + b)
+print("Product:", a * b)
+    </div>
+    <div class="mini-title">If-Else (Conditions):</div>
+    <div class="code-block">
+score = 56
+if score >= 50:
+    print("Pass")
+else:
+    print("Fail")
+    </div>
+    <div class="mini-title">Loops:</div>
+    <div class="code-block">
+for i in range(1, 6):
+    print(i)
+    </div>
+    <div class="mini-title">List Example:</div>
+    <div class="code-block">
+fruits = ["apple", "banana", "mango"]
+for fruit in fruits:
+    print(fruit)
+    </div>
+    <div class="mini-title">Function Example:</div>
+    <div class="code-block">
+def greet(name):
+    print("Hello,", name)
+
+greet("webTune1")
+    </div>
+    <div class="project">
+      <b>Mini Project: Python Calculator (Add, Subtract, Multiply, Divide)</b>
+      <div class="code-block">
+num1 = 7
+num2 = 3
+
+print("Sum:", num1 + num2)
+print("Difference:", num1 - num2)
+print("Product:", num1 * num2)
+print("Quotient:", num1 / num2)
+      </div>
+      <b>Try:</b> Change numbers and see the result.
+    </div>
+    <div class="question">
+      <b>Practice:</b> Write a Python program to print your name and your favorite food.
+    </div>
+    <div class="mini-title">How to run Python:</div>
+    <ul>
+      <li>Install Python: <a href="https://www.python.org/" target="_blank">python.org</a></li>
+      <li>Write code in Notepad/VS Code. Save as <b>test.py</b></li>
+      <li>Open Command Prompt, type: <code>python test.py</code></li>
+    </ul>
+  </div>
+
+  <!-- Resources Section -->
+  <div class="section" id="resources">
+    <h2>5. Best Free Learning Resources</h2>
+    <ul>
+      <li><a href="https://www.w3schools.com/" target="_blank">W3Schools</a> — Simple tutorials for HTML, CSS, JS, Python</li>
+      <li><a href="https://www.freecodecamp.org/" target="_blank">freeCodeCamp</a> — Free web development courses</li>
+      <li><a href="https://www.geeksforgeeks.org/" target="_blank">GeeksForGeeks</a> — Coding articles and practice</li>
+      <li><a href="https://www.programiz.com/python-programming" target="_blank">Programiz Python</a> — Python tutorials</li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web" target="_blank">MDN Web Docs</a> — Best docs for HTML, CSS, JS</li>
+    </ul>
+    <div class="note">
+      <b>Tip:</b> Search Google like: <br>
+      <i>“How to center a div in CSS”</i> or <i>“JS change text on click”</i><br>
+      You’ll find answers and examples!
+    </div>
+    <div class="note">
+      <b>Keep adding your own notes in this file as you learn!</b>
+    </div>
+  </div>
+
+  <footer>
+    Made by webTune1 • Keep learning & growing! • Edit this file to add your own notes.
+  </footer>
 
   <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    // Tab Navigation
+    document.querySelectorAll(".tablink").forEach(function(btn){
+      btn.onclick = function(){
+        document.querySelectorAll(".tablink").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.getAttribute("data-tab")).classList.add("active");
+      }
+    });
+    // Theme toggle
+    const themeBtn = document.getElementById('themeBtn');
+    function setTheme(mode) {
+      if(mode==='dark') {
+        document.body.classList.add('dark');
+        themeBtn.innerText = "🌞 Day Mode";
+      } else {
+        document.body.classList.remove('dark');
+        themeBtn.innerText = "🌙 Night Mode";
+      }
+      localStorage.setItem('theme', mode);
     }
-
-    function toggleTheme() {
-      document.body.classList.toggle('dark-mode');
+    themeBtn.onclick = function() {
+      setTheme(document.body.classList.contains('dark')?'light':'dark');
     }
+    // On load, set theme
+    if(localStorage.getItem('theme')==='dark') setTheme('dark');
   </script>
 </body>
 </html>
